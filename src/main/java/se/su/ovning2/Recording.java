@@ -1,6 +1,7 @@
 package se.su.ovning2;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 public class Recording {
@@ -16,6 +17,24 @@ public class Recording {
     this.artist = artist;
     this.type = type;
     this.genre = genre;
+  }
+
+  public boolean equals(Object obj){
+    if (this == obj) {
+      return true;
+    }
+    if(obj == null || getClass() != obj.getClass()){
+      return false;
+    }
+    Recording other = (Recording) obj;
+    if(Objects.equals(other.title, title)&& Objects.equals(other.artist, artist) && year == other.year){
+      return true;
+    }
+    return false;
+  }
+
+  public int hashCode(){
+    return Objects.hash(title, artist, year);
   }
 
   public String getArtist() {
