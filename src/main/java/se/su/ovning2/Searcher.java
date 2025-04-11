@@ -24,6 +24,28 @@ public class Searcher implements SearchOperations {
       recordings.add(recording);
       artists.add(recording.getArtist());
       genres.addAll(recording.getGenre());
+
+      String artist = recording.getArtist();
+
+      if(!artistMap.containsKey(artist)){
+        Set<Recording> artistRecordings= new HashSet<>();
+        artistMap.put(artist, artistRecordings);
+      }
+
+      artistMap.get(artist).add(recording);
+
+      Collection<String> RecordingGenres = recording.getGenre();
+
+      for(String g: RecordingGenres) {
+        if (!genreMap.containsKey(g)) {
+          Set<Recording> genre = new HashSet<>();
+          genreMap.put(g, genre);
+        }
+        genreMap.get(g).add(recording);
+      }
+
+      titleMap.put(recording.getTitle(), recording);
+
     }
   }
 
