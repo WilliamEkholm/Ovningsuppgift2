@@ -109,13 +109,27 @@ public class Searcher implements SearchOperations {
 
   @Override
   public Collection<Recording> getRecordingsByGenreAndYear(String genre, int yearFrom, int yearTo) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getRecordingsByGenreAndYear'");
+    if (!genreMap.containsKey(genre)) {
+      return Collections.emptySet();
+    }
+    Set<Recording> recordingsByGenre = genreMap.get(genre);
+    Set<Recording> recordingsByGenreYear = new HashSet<>();
+    for(Recording recording : recordingsByGenre) {
+      if(recording.getYear() >= yearFrom && recording.getYear() <= yearTo){
+        recordingsByGenreYear.add(recording);
+      }
+    }
+    return Collections.unmodifiableSet(recordingsByGenreYear);
   }
 
   @Override
   public Collection<Recording> offerHasNewRecordings(Collection<Recording> offered) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'offerHasNewRecordings'");
+    Set<Recording> newRecordings = new HashSet<>();
+    for(Recording recording : offered){
+      if(!recordings.contains(recording)){
+        newRecordings.add(recording);
+      }
+    }
+    return Collections.unmodifiableSet(newRecordings);
   }
 }
