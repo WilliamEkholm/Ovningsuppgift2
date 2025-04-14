@@ -94,8 +94,14 @@ public class Searcher implements SearchOperations {
 
   @Override
   public SortedSet<Recording> getRecordingsByArtistOrderedByYearAsc(String artist) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getRecordingsByGenreAndYear'");
+
+      if (!artistMap.containsKey(artist)) {
+        return Collections.emptySortedSet();
+      }
+      SortedSet<Recording> sortedRecordings = new TreeSet<>(Comparator.comparingInt(Recording::getYear));
+      sortedRecordings.addAll(artistMap.get(artist));
+
+      return Collections.unmodifiableSortedSet(sortedRecordings);
   }
 
   @Override
